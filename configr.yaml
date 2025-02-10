@@ -1,0 +1,8 @@
+push:
+  host: docker.io
+  path: tonykerz
+  targets:
+    - .github
+    - configr.yaml
+  annotations:
+    foo: bar
