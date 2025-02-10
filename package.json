@@ -28,7 +28,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@watchmen/configr": "^1.0.6",
+    "@watchmen/configr": "^1.1.0",
     "@watchmen/containr": "^1.1.0",
     "@watchmen/debug": "^2.0.8",
     "@watchmen/helpr": "^3.0.0",
