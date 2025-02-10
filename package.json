@@ -1,6 +1,6 @@
 {
   "name": "containr-oci-pull-scratch",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "exports": "./src/index.js",
   "type": "module",
   "scripts": {
