@@ -16,7 +16,7 @@ ENV entrypoint=$entrypoint
 ENV appPath=/app
 WORKDIR $appPath
 
-ARG cmd=src/index.js
+ARG cmd=${appPath}/src/index.js
 ENV cmd=$cmd
 
 COPY . .
@@ -45,5 +45,7 @@ CMD ["sh", "-c", "npm test"]
 #
 FROM base AS prod
 RUN npm ci --omit=dev
+
+ENV NODE_CONFIG_DIR=${appPath}/config
 
 CMD ["sh", "-c", "${entrypoint} ${cmd}"]
