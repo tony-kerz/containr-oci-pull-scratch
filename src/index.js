@@ -20,12 +20,17 @@ async function main() {
     images,
     user: uid,
     async closure(withContainer) {
-      await withContainer({
-        image: 'oras',
-        input: `oras pull --output ${getContainerWork()} ${configr.ociImage}`,
-      })
-
+      const withOras = (args) => withContainer({...args, image: 'oras'})
       const withGcloud = (args) => withContainer({...args, image: 'gcloud'})
+
+      const work = getContainerWork()
+
+      const lsWork = await withGcloud({input: `ls -laR ${work}`})
+      dbg('ls-work=%s', lsWork)
+
+      await withOras({
+        input: `oras pull --output ${work} ${configr.ociImage}`,
+      })
 
       const which = await withGcloud({input: 'which gcloud'})
       dbg('which=%s', which)
