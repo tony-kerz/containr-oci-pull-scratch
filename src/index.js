@@ -11,14 +11,15 @@ const dbg = debug(import.meta.url)
 async function main() {
   await initHostWork()
 
-  const uid = await getUid()
+  const user = await getUid()
+  dbg('user=%o', user)
 
   const images = configr.containr.images
   dbg('images=%o', images)
 
   await withImages({
     images,
-    user: uid,
+    user,
     async closure(withContainer) {
       const withOras = (args) => withContainer({...args, image: 'oras'})
       const withGcloud = (args) => withContainer({...args, image: 'gcloud'})
