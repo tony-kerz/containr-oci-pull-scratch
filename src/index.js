@@ -3,12 +3,15 @@ import _ from 'lodash'
 import {configr} from '@watchmen/configr'
 import debug from '@watchmen/debug'
 import {withImages} from '@watchmen/containr'
-import {stringify} from '@watchmen/helpr'
+import {stringify, getPackage} from '@watchmen/helpr'
 import {getUid, getContainerWork, initHostWork} from '@watchmen/containr/util'
 
 const dbg = debug(import.meta.url)
 
 async function main() {
+  const pack = await getPackage()
+  dbg('package.version=%s', pack.version)
+
   await initHostWork()
 
   const user = await getUid()

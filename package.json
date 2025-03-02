@@ -13,25 +13,27 @@
     "pretest-container": "docker build -t $(npm run -s tag-sha) --progress=plain --target=test .",
     "test-container": "docker run -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp -u $(npm run -s user) $(npm run -s tag-sha)",
     "posttest-container": "npm run clear",
-    "lock": "docker build -t $(npm run -s tag) --target lock --output type=local,dest=. .",
-    "build-container": "docker build -t $(npm run -s tag) --progress=plain --target=prod .",
-    "run-container": "docker run -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp -u $(npm run -s user) -e OCI_IMAGE=ttl.sh/oci-scratch:1.0.0 -e IS_LOCAL=1 -e DEBUG=dbg:* -e HOME=${HOME} $(npm run -s tag)",
+    "lock": "docker build -t $(npm run -s name) --target lock --output type=local,dest=. .",
+    "build-container": "docker build -t $(npm run -s name) --progress=plain --target=prod .",
+    "run-container": "docker run -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp -u $(npm run -s user) -v $(npm run -s cfg):$(npm run -s cfg) -v $(pwd):$(pwd) -e CONFIGR_YAML=$(npm run -s cfg) -e DEBUG=dbg:* -e HOME=${HOME} -w $(pwd) $(npm run -s name)",
     "postrun-container": "npm run clear",
-    "tag": "echo ${npm_package_name}:${npm_package_version}",
-    "tag-sha": "echo ${npm_package_name}:$(npm run -s sha)",
-    "tag-full": "echo ${npm_package_name}:${npm_package_version}-$(npm run -s sha)",
+    "name": "echo ${npm_package_name}",
+    "version": "echo ${npm_package_version}",
+    "tag": "echo $(npm run -s name):${npm_package_version}",
+    "tag-sha": "echo $(npm run -s name):$(npm run -s sha)",
     "user": "echo $(id -u)",
     "clear": "rm -rf /tmp/containr",
-    "sha": "git rev-parse --short HEAD"
+    "sha": "git rev-parse --short HEAD",
+    "cfg": "echo $(pwd)/${npm_package_config_cfg}"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@watchmen/configr": "^1.1.0",
-    "@watchmen/containr": "^1.1.3",
+    "@watchmen/configr": "^1.1.1",
+    "@watchmen/containr": "^1.1.4",
     "@watchmen/debug": "^2.0.8",
-    "@watchmen/helpr": "^3.0.0",
+    "@watchmen/helpr": "^3.1.0",
     "config": "^3.3.12",
     "debug": "^4.4.0",
     "execa": "^9.5.2",
@@ -40,7 +42,7 @@
   },
   "devDependencies": {
     "ava": "^6.2.0",
-    "prettier": "^3.5.1",
+    "prettier": "^3.5.2",
     "xo": "^0.60.0"
   }
 }
