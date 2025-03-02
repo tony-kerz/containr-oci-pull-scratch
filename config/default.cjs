@@ -14,6 +14,9 @@ module.exports = {
         entrypoint: 'sh',
       },
     },
+    work: {
+      isInit: true,
+    },
   },
   configr: {
     format: 'json',
