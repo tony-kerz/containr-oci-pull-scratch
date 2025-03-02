@@ -24,9 +24,10 @@ jobs:
       - if: github.event_name == 'release'
         run: |
           echo ${{ secrets.REGISTRY_PASS }} | docker login -u ${{ vars.REGISTRY_USER }} --password-stdin
-          tag=$(npm run tag --silent)
-          _tag=${{ vars.REGISTRY_USER }}/${tag}
-          docker tag ${tag} ${_tag}
-          docker push ${_tag}
+          name=$(npm run -s name)
+          latest=${{ vars.REGISTRY_PATH }}/${name}
+          docker tag ${name} ${latest}
+          docker tag ${latest} ${latest}:$(npm run -s version)
+          docker push -a ${latest}
           docker logout
           cat ~/.docker/config.json
