@@ -4,7 +4,7 @@ import {configr} from '@watchmen/configr'
 import debug from '@watchmen/debug'
 import {withImages} from '@watchmen/containr'
 import {stringify, getPackage} from '@watchmen/helpr'
-import {getUid, getContainerWork, initHostWork} from '@watchmen/containr/util'
+import {getUid, getContainerWork, initWork} from '@watchmen/containr/util'
 
 const dbg = debug(import.meta.url)
 
@@ -12,7 +12,7 @@ async function main() {
   const pack = await getPackage()
   dbg('package.version=%s', pack.version)
 
-  await initHostWork()
+  await initWork()
 
   const user = await getUid()
   dbg('user=%o', user)
